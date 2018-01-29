@@ -57,6 +57,15 @@ public class StringHelper {
 		}
 		return sb.toString();
 	}
+	
+	public boolean isRotation(String str1, String str2) {
+		int len = str1.length();
+		if(len == str2.length() && len>0) {
+			String str = str1 + str1;
+			return str.contains(str2);
+		}
+		return false;
+	}
 
 	private int compressCount(String str) {
 		int length = Objects.nonNull(str) ? str.length() : 0;
