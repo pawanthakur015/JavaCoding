@@ -3,7 +3,14 @@
  */
 package com.pawan.coding.util;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * @author pawankumarthakur
@@ -65,6 +72,60 @@ public class StringHelper {
 			return str.contains(str2);
 		}
 		return false;
+	}
+	
+	public List<String> permuteString(String str){
+		char []input = str.toCharArray();
+		int len = input.length;
+		Map<Character, Integer> treeMap = new TreeMap<Character, Integer>();
+		for(char ch : input) {
+			treeMap.compute(ch ,(key, val) -> {
+				if(val==null) {
+					return 1;
+				} else {
+					return val+1;
+				}
+			});
+		}
+		
+		char []inputStr = new char[treeMap.size()];
+		int []count = new int[treeMap.size()];
+		int index=0;
+		//for()
+		return null;
+	}
+	
+	public int wordLadderCount(Set<String> wordSet, String start, String end) {
+		Queue<Count> queue = new LinkedList<Count>();
+		Count item = new Count(start, 1);
+		queue.add(item);
+		while(!queue.isEmpty()) {
+			Count tmp = queue.poll();
+			Iterator<String> it = wordSet.iterator();
+			while(it.hasNext()) {
+				String word = it.next();
+				if(adjencyCheck(tmp.current, word)) {
+					tmp.current = word;
+					tmp.count +=1;
+					queue.add(tmp);
+					it.remove();
+					if(word.equals(end)) {
+						return tmp.count;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+	
+	private boolean adjencyCheck(String start, String end) {
+		int cnt=0;
+		for(int i=0;i<start.length();i++) {
+			if(start.charAt(i)!=end.charAt(i)) {
+				cnt++;
+			}
+		}
+		return cnt>1 ? false : true;
 	}
 
 	private int compressCount(String str) {
